@@ -1,0 +1,26 @@
+body {
+  margin: 0px;
+  padding: 0px;
+}
+.main {
+  padding:0px;
+  padding-bottom:50px;
+  background-color: rgb(192, 134, 247);
+}
+
+.header {
+  margin:0px;
+  padding:10px 20px;
+  color: white;
+  background-color: blueviolet;
+  text-align: center;
+  width: 100%;
+}
+
+.data {
+  margin:0px;
+  padding:10px 15px;
+  color: white;
+  margin-right: 0px !important;
+  margin-left: 0px !important;
+}
