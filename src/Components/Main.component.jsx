@@ -3,7 +3,7 @@ import { Component, React } from "react";
 import { IconName , FaPlus } from "react-icons/fa";
 import Constants from "../Utils/Constants";
 import TaskList from "./TaskList.component";
-import Task from "./Task.component";
+import OpenTask from "./OpenTask.component";
 import store from "../Store/Store";
 import { connect } from "react-redux";
 import Actions from "../Store/Actions";
@@ -25,7 +25,7 @@ class MainComponent extends Component
                             <TaskList/>
                         </div>
                         <div className="col-8">
-                            <Task/>
+                            <OpenTask/>
                         </div>
                     </div>
                 </div>;

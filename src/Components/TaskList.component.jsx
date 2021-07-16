@@ -29,16 +29,10 @@ const TaskList = function(props) {
     
 
     const dispatch = useDispatch();
-    const tasks = useSelector(state => state.tasks);
+    const taskList = useSelector(state => state.tasks);
 
     useEffect(() => {
-        const action = {
-            type : Constants.TaskAction.ToggleForm,
-            payload : {
-                taskForm : true
-            }
-        };
-        dispatch(action);
+        dispatch(Actions.GetState());
     }, []);
 
     return  <div style={taskListStyle}>
@@ -46,18 +40,18 @@ const TaskList = function(props) {
                     style={{...addBtnStyle, borderRadius:0}} 
                     onClick={()=> dispatch(Actions.ToggleForm(true))} > 
                         Add new task  
-                        <span style={{float:"right"}}> <FaPlus/> </span> 
+                    <span style={{float:"right"}}> <FaPlus/> </span> 
                 </button>
 
                 <ul className="list-group" style={taskStyle}>
-                    {tasks.map((task) => (
+                    {taskList.map((task) => (
                         <li key={task.id} className="list-group-item" >
-                            { task.title.substring(0,10) } 
+                            { task.title.substring(0,16) } 
                             <button 
-                                className = "btn btn-success"
+                                className = "btn btn-info"
                                 style={{float:"right"}}
-                                onClick = {() => dispatch(Actions.Update_Status(task.id, Constants.TaskStatus.DONE)) } > 
-                                Done 
+                                onClick = {() => dispatch(Actions.SetDisplayTask(task.id)) } >
+                                Open 
                             </button>
                         </li>
                     ))}

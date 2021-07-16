@@ -8,12 +8,15 @@ function Task(id, title, desc="")
     this.title = title;
     this.desc = desc;
     this.status = Constants.TaskStatus.TODO;
-    this.createdDate = Utilities.DateToString(new Date());
+    this.createDate = Utilities.DateToString(new Date());
 }
 
 let lastId = 0;
 lastId += 1;
-const defaultState = {tasks:[new Task(lastId, "Task 1")], openTasks:[], shownTask:-1, taskForm:false};
+lastId += 1;
+const defaultState = {tasks:[new Task(1, "Play football","Call Steve for football match. Set a time to play. Go and play the match and then win it!"),
+                                new Task(2, "Task 2")],
+                        openTasks:[], shownTask:-1, taskForm:false};
 
 function reducer(state = defaultState, action) 
 {
@@ -53,9 +56,6 @@ function reducer(state = defaultState, action)
             let updState = {...state};
             let task =  updState.tasks.find(x => x.id == action.payload.id);
             task.desc = action.payload.desc;
-            
-            console.log(task);
-
             updState.openTasks = updState.tasks.filter(x => x.status != Constants.TaskStatus.DONE);
             
             return updState;
@@ -67,13 +67,12 @@ function reducer(state = defaultState, action)
             task.status = action.payload.status;
 
             if(task.status == Constants.TaskStatus.ONGOING) {
-                task.statedDate = Utilities.DateToString(new Date());
-                task.completedDate = "";
+                task.startDate = Utilities.DateToString(new Date());
+                task.completeDate = "";
             }
             else if(task.status == Constants.TaskStatus.DONE) {
-                task.completedDate = Utilities.DateToString(new Date());
+                task.completeDate = Utilities.DateToString(new Date());
             }
-            console.log(task);
     
             updState.openTasks = updState.tasks.filter(x => x.status != Constants.TaskStatus.DONE);
             

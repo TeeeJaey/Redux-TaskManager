@@ -5,11 +5,11 @@ class Constants
     {
         const TaskAction = {
             ToggleForm: "ToggleForm",
-            SetOpenTask: "SetDisplayTask",
-            GetSTATE: "GetState",
+            SetDisplayTask: "SetDisplayTask",
+            GetState: "GetState",
             Create: "Create",
             Update_Desc: "Update_Desc",
-            Update_Status: "date_Status",
+            Update_Status: "Update_Status",
             Delete: "Delete"
         };
         return TaskAction;
