@@ -19,7 +19,7 @@ class Actions
         const action = {
             type : Constants.TaskAction.SetDisplayTask,
             payload : {
-                shownTask: id
+                shownTaskId: id
             }
         };
         return action;
@@ -34,10 +34,21 @@ class Actions
         return action;
     }
 
-    static CreateTask(title, desc) {
+    static Create_Task_Toggle(createTaskToggle) {
 
         const action = {
-            type : Constants.TaskAction.Create,
+            type : Constants.TaskAction.Create_Task_Toggle,
+            payload : {
+                createTaskToggle: createTaskToggle
+            }
+        };
+        return action;
+    }
+
+    static Create_Task_Submit(title, desc) {
+
+        const action = {
+            type : Constants.TaskAction.Create_Task_Submit,
             payload : {
                 title: title,
                 desc : desc
@@ -46,22 +57,23 @@ class Actions
         return action;
     }
 
+
     static Edit_Task_Toggle(id,editTaskToggle){
 
         const action = {
             type : Constants.TaskAction.Edit_Task_Toggle,
             payload : {
-                shownTask: id,
+                shownTaskId: id,
                 editTaskToggle: editTaskToggle
             }
         };
         return action;
     }
 
-    static Edit_Task(id,title,desc){
+    static Edit_Task_Submit(id,title,desc){
 
         const action = {
-            type : Constants.TaskAction.Edit_Task,
+            type : Constants.TaskAction.Edit_Task_Submit,
             payload : {
                 id: id,
                 title : title,

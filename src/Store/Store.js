@@ -1,6 +1,7 @@
 import { createStore } from "redux";
 import Constants from "../Utils/Constants";
 import Utilities from "../Utils/Utilities";
+import Actions from "../Store/Actions";
 
 function Task(id, title, desc="")
 {
@@ -12,11 +13,7 @@ function Task(id, title, desc="")
 }
 
 let lastId = 0;
-lastId += 1;
-lastId += 1;
-const defaultState = {tasks:[new Task(1, "Play football","Call Steve for football match. Set a time to play. Go and play the match and then win it!"),
-                                new Task(2, "Task 2")],
-                        openTasks:[], shownTask:-1, taskForm:false};
+const defaultState = {tasks:[], openTasks:[], shownTaskId:-1};
 
 function reducer(state = defaultState, action) 
 {
@@ -31,7 +28,7 @@ function reducer(state = defaultState, action)
 
         case Constants.TaskAction.SetDisplayTask: {
             let newState = {...state};
-            newState.shownTask = action.payload.shownTask;
+            newState.shownTaskId = action.payload.shownTaskId;
             newState.openTasks = newState.tasks.filter(x => x.status != Constants.TaskStatus.DONE);
             return newState;
         }
@@ -42,9 +39,20 @@ function reducer(state = defaultState, action)
             return newState;
         }
 
-        case Constants.TaskAction.Create: {
+        case Constants.TaskAction.Create_Task_Toggle: {
+            let newState = {...state};
+            newState.shownTaskId = -1;
+            newState.editTaskToggle = false;
+            newState.createTaskToggle = action.payload.createTaskToggle;
+            newState.openTasks = newState.tasks.filter(x => x.status != Constants.TaskStatus.DONE);
+            
+            return newState;
+        }
+
+        case Constants.TaskAction.Create_Task_Submit: {
             let newState = {...state};
             lastId += 1;
+            newState.shownTaskId = lastId;
             let task =  new Task(lastId, action.payload.title, action.payload.desc)
             newState.tasks.push(task);
             newState.openTasks = newState.tasks.filter(x => x.status != Constants.TaskStatus.DONE);
@@ -54,14 +62,18 @@ function reducer(state = defaultState, action)
         
         case Constants.TaskAction.Edit_Task_Toggle : {
             let newState = {...state};
-            newState.shownTask = action.payload.shownTask;
+            newState.shownTaskId = action.payload.shownTaskId;
             newState.editTaskToggle = action.payload.editTaskToggle;
             newState.openTasks = newState.tasks.filter(x => x.status != Constants.TaskStatus.DONE);
             
             return newState;
         }
-        case Constants.TaskAction.Edit_Task : {
+
+        case Constants.TaskAction.Edit_Task_Submit : {
             let newState = {...state};
+            newState.tasks = [...state.tasks];
+            newState.openTasks = [...state.openTasks];
+
             let task =  newState.tasks.find(x => x.id == action.payload.id);
             task.title = action.payload.title;
             task.desc = action.payload.desc;
@@ -72,6 +84,9 @@ function reducer(state = defaultState, action)
         
         case Constants.TaskAction.Update_Status : {
             let newState = {...state};
+            newState.tasks = [...state.tasks];
+            newState.openTasks = [...state.openTasks];
+
             let task =  newState.tasks.find(x => x.id == action.payload.id);
             task.status = action.payload.status;
 
@@ -104,3 +119,11 @@ function reducer(state = defaultState, action)
 
 const store  = createStore(reducer);
 export default store;
+
+
+
+//REMOVE below Code
+store.dispatch(Actions.Create_Task_Submit("Play cricket","Go to the school ground. \n Set a time to play cricket. \n Go and play the match and then win it!"));
+store.dispatch(Actions.Update_Status(1,Constants.TaskStatus.DONE));
+
+store.dispatch(Actions.Create_Task_Submit("Play football","Call Steve for football match. \n Set a time to play football. \n Go and play the match and then win it!"));

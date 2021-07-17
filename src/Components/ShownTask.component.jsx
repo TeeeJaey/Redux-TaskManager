@@ -6,19 +6,19 @@ import Actions from "../Store/Actions";
 import { useState } from "react";
 
 
-const OpenTask = (props) => {
+const ShownTask = (props) => {
     const [title, setTitle] = useState("");
     const [desc, setDesc] = useState("");
 
-    const task = useSelector(state => state.tasks.find(x =>x.id == state.shownTask));
-    
+    const task = useSelector(state => state.tasks.find(x =>x.id == state.shownTaskId));
+
+    const editTaskToggle = useSelector(state => state.editTaskToggle);
+    const createTaskToggle = useSelector(state => state.createTaskToggle);
     useSelector(state => {
-        const shownTask = state.tasks.find(x =>x.id == state.shownTask);
+        const shownTask = state.tasks.find(x =>x.id == state.shownTaskId);
         if (shownTask) return shownTask.status;
         else return "";
     });
-
-    const editTaskToggle = useSelector(state => state.editTaskToggle);
     
     const dispatch = useDispatch();
 
@@ -37,7 +37,49 @@ const OpenTask = (props) => {
         fontSize: "22px"
     }
 
+    if(createTaskToggle) {
+        return  <div style={taskStyle}>
 
+                    <div className="modal-dialog " role="document">
+                        <div className="modal-content">
+                            <div key="modal-header" className="modal-header row">
+                                <h5 className="modal-title col-2" style={{margin:"auto"}}> Title: </h5>
+                                <input className="col-10" type="text" value={title} onChange={e => setTitle(e.target.value)} />
+                            </div>
+                            <div key="modal-body" className="modal-body" style={{height: "320px", overflowY:"auto"}}>
+                                <h5 className="modal-title" style={{margin:"auto"}}> Description: </h5>
+                             
+                                <textarea value={desc} style={{height: "250px", width:"100%",overflowY:"auto"}} onChange={e => setDesc(e.target.value)} />
+                            </div>
+                                <li className="list-group-item list-group-item-success">
+                                    <b>Status: </b> Not Created
+                                </li>
+                            <div key="modal-footer" className="modal-footer">
+                                <button
+                                    type="button" className="btn btn-danger" style={{width: "48%"}} 
+                                    onClick={() => {
+                                        dispatch(Actions.Create_Task_Toggle(false));
+                                        setTitle("");
+                                        setDesc("");
+                                    }} > 
+                                    Cancel new task 
+                                </button>
+                                <button
+                                    type="button" className="btn btn-success" style={{width: "48%"}} 
+                                    onClick={() => {
+                                        dispatch(Actions.Create_Task_Submit(title, desc));
+                                        dispatch(Actions.Create_Task_Toggle(false));
+                                        setTitle("");
+                                        setDesc("");
+                                    }} > 
+                                    Confirm new task
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>;
+    }
     if(task) {
         if(editTaskToggle) {
             return  <div style={taskStyle}>
@@ -61,16 +103,20 @@ const OpenTask = (props) => {
                                         type="button" className="btn btn-danger" style={{width: "48%"}} 
                                         onClick={() => {
                                             dispatch(Actions.Edit_Task_Toggle(task.id, false));
+                                            setTitle("");
+                                            setDesc("");
                                         }} > 
-                                        Cancel Edit
+                                        Cancel edit
                                     </button>
                                     <button
                                         type="button" className="btn btn-success" style={{width: "48%"}} 
                                         onClick={() => {
-                                            dispatch(Actions.Edit_Task(task.id, title, desc));
+                                            dispatch(Actions.Edit_Task_Submit(task.id, title, desc));
                                             dispatch(Actions.Edit_Task_Toggle(task.id, false));
+                                            setTitle("");
+                                            setDesc("");
                                         }} > 
-                                        Confirm Edit
+                                        Confirm edit
                                     </button>
                                 </div>
                             </div>
@@ -151,4 +197,4 @@ const OpenTask = (props) => {
 
 }
 
-export default OpenTask;
+export default ShownTask;

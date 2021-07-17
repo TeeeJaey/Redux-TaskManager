@@ -3,7 +3,7 @@ import { Component, React } from "react";
 import { IconName , FaPlus } from "react-icons/fa";
 import Constants from "../Utils/Constants";
 import TaskList from "./TaskList.component";
-import OpenTask from "./OpenTask.component";
+import ShownTask from "./ShownTask.component";
 import store from "../Store/Store";
 import { connect } from "react-redux";
 import Actions from "../Store/Actions";
@@ -11,10 +11,6 @@ import Actions from "../Store/Actions";
 
 class MainComponent extends Component
 {
-    componentDidMount() {
-       // this.getTasks();
-    }
-
     render() {
         return  <div className="main">
                     <div className="header">
@@ -25,7 +21,7 @@ class MainComponent extends Component
                             <TaskList/>
                         </div>
                         <div className="col-8">
-                            <OpenTask/>
+                            <ShownTask/>
                         </div>
                     </div>
                 </div>;
@@ -33,23 +29,5 @@ class MainComponent extends Component
 }
 
 
-// const mapStateToProps = state => {
-//     return {
-//         tasks: state.tasks
-//     }
-// };
+export default MainComponent; 
 
-// const mapDispatchToProps = dispatch => {
-//     const action = {
-//         type : Constants.TaskAction.ToggleForm,
-//         payload : {
-//             taskForm : true
-//         }
-//     }
-
-//     return {
-//         getTasks: () => dispatch(Actions.GetState())
-//     }
-// };
-
-export default MainComponent; // connect(mapStateToProps, mapDispatchToProps)(MainComponent)

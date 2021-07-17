@@ -1,8 +1,9 @@
 
 import { React } from "react";
-import { FaPlus} from "react-icons/fa";
+import { FaPlus, FaCheck } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import Actions from "../Store/Actions";
+import Constants from "../Utils/Constants";
 
 
 const TaskList = function(props) {
@@ -29,14 +30,16 @@ const TaskList = function(props) {
     let yelloBG = {backgroundColor:"yellow"}
 
     const dispatch = useDispatch();
-    const showntaskId = useSelector(state => state.shownTask);
+    const shownTaskId = useSelector(state => state.shownTaskId);
     const taskList = useSelector(state => state.tasks);
 
+    const editTaskToggle = useSelector(state => state.editTaskToggle);
+    const createTaskToggle = useSelector(state => state.createTaskToggle);
 
     return  <div style={taskListStyle}>
                 <button className="btn btn-primary" 
-                    style={{...addBtnStyle, borderRadius:0}} 
-                    onClick={()=> dispatch(Actions.ToggleForm(true))} > 
+                    style={{...addBtnStyle, borderRadius:0}}  disabled={editTaskToggle || createTaskToggle }
+                    onClick={()=> dispatch(Actions.Create_Task_Toggle(true))} > 
                         Add new task  
                     <span style={{float:"right"}}> <FaPlus/> </span> 
                 </button>
@@ -44,9 +47,18 @@ const TaskList = function(props) {
                 <ul className="list-group" style={taskStyle}>
                     {taskList.map((task) => (
 
-                        <li key={task.id} className="list-group-item" style={task.id==showntaskId ? yelloBG : {}} 
-                            onClick = {() => dispatch(Actions.SetDisplayTask(task.id))} >
+                        <li key={task.id} 
+                            className={task.status === Constants.TaskStatus.DONE? "list-group-item list-group-item-success":"list-group-item "} 
+                            style={task.id==shownTaskId ? yelloBG : {}} 
+                            disabled={editTaskToggle || createTaskToggle }
+                            onClick = {() => {
+                                if(!editTaskToggle && !createTaskToggle)
+                                    dispatch(Actions.SetDisplayTask(task.id))}
+                             } >
                             { task.title.substring(0,16) } 
+                            {   task.status === Constants.TaskStatus.DONE &&
+                                <span style={{float:"right"}}> <FaCheck/> </span>
+                            } 
                         </li>
                     ))}
                 </ul>

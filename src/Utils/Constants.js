@@ -7,9 +7,10 @@ class Constants
             ToggleForm: "ToggleForm",
             SetDisplayTask: "SetDisplayTask",
             GetState: "GetState",
-            Create: "Create",
+            Create_Task_Toggle: "Create_Task_Toggle",
+            Create_Task_Submit: "Create_Task_Submit",
             Edit_Task_Toggle : "Edit_Task_Toggle",
-            Edit_Task: "Edit_Task",
+            Edit_Task_Submit: "Edit_Task_Submit",
             Update_Status: "Update_Status",
             Delete: "Delete"
         };
