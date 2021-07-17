@@ -8,7 +8,8 @@ class Constants
             SetDisplayTask: "SetDisplayTask",
             GetState: "GetState",
             Create: "Create",
-            Update_Desc: "Update_Desc",
+            Edit_Task_Toggle : "Edit_Task_Toggle",
+            Edit_Task: "Edit_Task",
             Update_Status: "Update_Status",
             Delete: "Delete"
         };

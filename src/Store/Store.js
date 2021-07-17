@@ -23,47 +23,56 @@ function reducer(state = defaultState, action)
     switch(action.type) 
     {
         case Constants.TaskAction.ToggleForm: {
-            let updState = {...state};
-            updState.taskForm = action.payload.taskForm;
-            updState.openTasks = updState.tasks.filter(x => x.status != Constants.TaskStatus.DONE);
-            return updState;
+            let newState = {...state};
+            newState.taskForm = action.payload.taskForm;
+            newState.openTasks = newState.tasks.filter(x => x.status != Constants.TaskStatus.DONE);
+            return newState;
         }
 
         case Constants.TaskAction.SetDisplayTask: {
-            let updState = {...state};
-            updState.shownTask = action.payload.shownTask;
-            updState.openTasks = updState.tasks.filter(x => x.status != Constants.TaskStatus.DONE);
-            return updState;
+            let newState = {...state};
+            newState.shownTask = action.payload.shownTask;
+            newState.openTasks = newState.tasks.filter(x => x.status != Constants.TaskStatus.DONE);
+            return newState;
         }
 
         case Constants.TaskAction.GetState: {
-            let updState = {...state};
-            updState.openTasks = updState.tasks.filter(x => x.status != Constants.TaskStatus.DONE);
-            return updState;
+            let newState = {...state};
+            newState.openTasks = newState.tasks.filter(x => x.status != Constants.TaskStatus.DONE);
+            return newState;
         }
 
         case Constants.TaskAction.Create: {
-            let updState = {...state};
+            let newState = {...state};
             lastId += 1;
             let task =  new Task(lastId, action.payload.title, action.payload.desc)
-            updState.tasks.push(task);
-            updState.openTasks = updState.tasks.filter(x => x.status != Constants.TaskStatus.DONE);
+            newState.tasks.push(task);
+            newState.openTasks = newState.tasks.filter(x => x.status != Constants.TaskStatus.DONE);
 
-            return updState;
+            return newState;
         }
-
-        case Constants.TaskAction.Update_Desc : {
-            let updState = {...state};
-            let task =  updState.tasks.find(x => x.id == action.payload.id);
-            task.desc = action.payload.desc;
-            updState.openTasks = updState.tasks.filter(x => x.status != Constants.TaskStatus.DONE);
+        
+        case Constants.TaskAction.Edit_Task_Toggle : {
+            let newState = {...state};
+            newState.shownTask = action.payload.shownTask;
+            newState.editTaskToggle = action.payload.editTaskToggle;
+            newState.openTasks = newState.tasks.filter(x => x.status != Constants.TaskStatus.DONE);
             
-            return updState;
+            return newState;
+        }
+        case Constants.TaskAction.Edit_Task : {
+            let newState = {...state};
+            let task =  newState.tasks.find(x => x.id == action.payload.id);
+            task.title = action.payload.title;
+            task.desc = action.payload.desc;
+            newState.openTasks = newState.tasks.filter(x => x.status != Constants.TaskStatus.DONE);
+            
+            return newState;
         }
         
         case Constants.TaskAction.Update_Status : {
-            let updState = {...state};
-            let task =  updState.tasks.find(x => x.id == action.payload.id);
+            let newState = {...state};
+            let task =  newState.tasks.find(x => x.id == action.payload.id);
             task.status = action.payload.status;
 
             if(task.status == Constants.TaskStatus.ONGOING) {
@@ -74,17 +83,17 @@ function reducer(state = defaultState, action)
                 task.completeDate = Utilities.DateToString(new Date());
             }
     
-            updState.openTasks = updState.tasks.filter(x => x.status != Constants.TaskStatus.DONE);
+            newState.openTasks = newState.tasks.filter(x => x.status != Constants.TaskStatus.DONE);
             
-            return updState;
+            return newState;
         }
 
         case Constants.TaskAction.Delete : {
-            let updState = {...state};
-            updState.tasks =  updState.tasks.filter(x => x.id != action.payload.id);
-            updState.openTasks = updState.tasks.filter(x => x.status != Constants.TaskStatus.DONE);
+            let newState = {...state};
+            newState.tasks =  newState.tasks.filter(x => x.id != action.payload.id);
+            newState.openTasks = newState.tasks.filter(x => x.status != Constants.TaskStatus.DONE);
             
-            return updState;
+            return newState;
         }
 
         default: {

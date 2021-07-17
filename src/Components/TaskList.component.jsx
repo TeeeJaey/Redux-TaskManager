@@ -1,10 +1,7 @@
 
-import { Component, React } from "react";
-import { IconName , FaPlus, FaBug } from "react-icons/fa";
-import Constants from "../Utils/Constants";
-import store from "../Store/Store";
-import { connect, useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { React } from "react";
+import { FaPlus} from "react-icons/fa";
+import { useDispatch, useSelector } from "react-redux";
 import Actions from "../Store/Actions";
 
 
@@ -20,7 +17,8 @@ const TaskList = function(props) {
 
     const taskStyle = {
         color:"black",
-        fontSize:"20px"
+        fontSize:"20px",
+        cursor:"pointer"
     }
     const addBtnStyle = {
         fontSize: "20px",
@@ -28,12 +26,12 @@ const TaskList = function(props) {
     };
     
 
+    let yelloBG = {backgroundColor:"yellow"}
+
     const dispatch = useDispatch();
+    const showntaskId = useSelector(state => state.shownTask);
     const taskList = useSelector(state => state.tasks);
 
-    useEffect(() => {
-        dispatch(Actions.GetState());
-    }, []);
 
     return  <div style={taskListStyle}>
                 <button className="btn btn-primary" 
@@ -45,14 +43,10 @@ const TaskList = function(props) {
 
                 <ul className="list-group" style={taskStyle}>
                     {taskList.map((task) => (
-                        <li key={task.id} className="list-group-item" >
+
+                        <li key={task.id} className="list-group-item" style={task.id==showntaskId ? yelloBG : {}} 
+                            onClick = {() => dispatch(Actions.SetDisplayTask(task.id))} >
                             { task.title.substring(0,16) } 
-                            <button 
-                                className = "btn btn-info"
-                                style={{float:"right"}}
-                                onClick = {() => dispatch(Actions.SetDisplayTask(task.id)) } >
-                                Open 
-                            </button>
                         </li>
                     ))}
                 </ul>

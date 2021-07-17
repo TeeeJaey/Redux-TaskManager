@@ -14,12 +14,12 @@ class Actions
         return action;
     }
     
-    static SetDisplayTask(shownTask) {
+    static SetDisplayTask(id) {
 
         const action = {
             type : Constants.TaskAction.SetDisplayTask,
             payload : {
-                shownTask: shownTask
+                shownTask: id
             }
         };
         return action;
@@ -46,12 +46,25 @@ class Actions
         return action;
     }
 
-    static Update_Desc(id,desc){
+    static Edit_Task_Toggle(id,editTaskToggle){
 
         const action = {
-            type : Constants.TaskAction.Update_Desc,
+            type : Constants.TaskAction.Edit_Task_Toggle,
+            payload : {
+                shownTask: id,
+                editTaskToggle: editTaskToggle
+            }
+        };
+        return action;
+    }
+
+    static Edit_Task(id,title,desc){
+
+        const action = {
+            type : Constants.TaskAction.Edit_Task,
             payload : {
                 id: id,
+                title : title,
                 desc : desc
             }
         };
