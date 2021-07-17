@@ -11,6 +11,13 @@ const OpenTask = (props) => {
     const [desc, setDesc] = useState("");
 
     const task = useSelector(state => state.tasks.find(x =>x.id == state.shownTask));
+    
+    useSelector(state => {
+        const shownTask = state.tasks.find(x =>x.id == state.shownTask);
+        if (shownTask) return shownTask.status;
+        else return "";
+    });
+
     const editTaskToggle = useSelector(state => state.editTaskToggle);
     
     const dispatch = useDispatch();
@@ -81,7 +88,8 @@ const OpenTask = (props) => {
                                     <h3 className="modal-title" style={{margin:"auto"}}> {task.title} </h3> 
                                 </div>
                                 <div key="modal-body" className="modal-body" style={{height: "320px", overflowY:"auto"}}>
-                                    {task.desc.split("\n").map(function(item, idx) {
+                                    {
+                                        task.desc.split("\n").map(function(item, idx) {
                                             return (
                                                 <span key={idx}>
                                                     {item}
