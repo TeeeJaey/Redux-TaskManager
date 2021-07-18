@@ -230,7 +230,7 @@ const MobileUI = (props) => {
                                     {
                                         task.status==Constants.TaskStatus.DONE &&
                                         <button
-                                            type="button" className="btn btn-success" style={headbtnList}
+                                            type="button" className="btn btn-success" style={footbtnList}
                                             onClick={() => dispatch(Actions.Update_Status(task.id, Constants.TaskStatus.TODO))}  > 
                                             Re Open
                                         </button>
