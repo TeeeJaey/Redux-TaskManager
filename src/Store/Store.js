@@ -123,7 +123,7 @@ export default store;
 
 
 //REMOVE below Code
-store.dispatch(Actions.Create_Task_Submit("Play cricket","Go to the school ground. \n Set a time to play cricket. \n Go and play the match and then win it!"));
+store.dispatch(Actions.Create_Task_Submit("Play cricket","Go to the school ground. \n Invite friends and play cricket. \n Then win it!"));
 store.dispatch(Actions.Update_Status(1,Constants.TaskStatus.DONE));
 
-store.dispatch(Actions.Create_Task_Submit("Play football","Call Steve for football match. \n Set a time to play football. \n Go and play the match and then win it!"));
+store.dispatch(Actions.Create_Task_Submit("Play football","Call Steve for football match. \n Set a time to play football. \n Tthen win it!"));
